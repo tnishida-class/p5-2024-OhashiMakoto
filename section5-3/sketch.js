@@ -1,59 +1,72 @@
-// テキスト「関数を作る(2) 結果を戻す関数」～「総仕上げ：カレンダーを描画しよう」
-function setup(){
+function setup() {
   createCanvas(200, 200);
   calendar(2019, 10);
 
   // isLeapYear の動作確認のため console に出力しています
-  for(let i = 2000; i <= 2100; i++){
-    if(isLeapYear(i)){
+  for (let i = 2000; i <= 2100; i++) {
+    if (isLeapYear(i)) {
       console.log(i + "年はうるう年です");
-    }
-    else{
+    } else {
       console.log(i + "年はうるう年ではありません");
     }
   }
+  const dateNum = dayOfWeek(2024, 11, 19);
+  const dateString = dayOfWeekAsString(dateNum);
+  console.log(dateString);
 }
 
-function calendar(y, m){
+function calendar(y, m) {
   let dow = dayOfWeek(y, m, 1);
-  for(let d = 1; d <= daysInMonth(y, m); d++){
+  for (let d = 1; d <= daysInMonth(y, m); d++) {
     // BLANK[3] (hint: まずは daysInYear, dayOfWeek を作ろう)
   }
 }
 
-function isLeapYear(y){
+function isLeapYear(y) {
   return (y % 4 == 0) && (y % 100 != 0) || (y % 400 == 0);
 }
 
-function daysInYear(y){
-  // BLANK[1]
+function daysInYear(y) {
+  if ((y % 4 == 0) && (y % 100 != 0) || (y % 400 == 0)) {
+    console.log(366);
+    return 366;
+  } else {
+    console.log(365);
+    return 365;
+  }
 }
 
-function daysInMonth(y, m){
-  if(m == 2){
+function daysInMonth(y, m) {
+  if (m == 2) {
     return isLeapYear(y) ? 29 : 28;
-  }
-  else if(m == 4 || m == 6 || m == 9 || m == 11){
+  } else if (m == 4 || m == 6 || m == 9 || m == 11) {
     return 30;
-  }
-  else{
+  } else {
     return 31;
   }
 }
 
-function dayOfYear(y, m, d){
+function dayOfYear(y, m, d) {
   let count = 0;
-  for(let i = 1; i < m; i++){
+  for (let i = 1; i < m; i++) {
     count += daysInMonth(y, i);
   }
   return count + d;
 }
 
-function dayOfWeek(y, m, d){
-  // BLANK[2]
+function dayOfWeek(y, m, d) {
+  if (m < 3) {
+    m += 12;
+    y--;
+  }
+  let k = y % 100;
+  let j = Math.floor(y / 100);
+
+  let dow = (d + Math.floor((13 * (m + 1)) / 5) + k + Math.floor(k / 4) + Math.floor(j / 4) - 2 * j) % 7;
+  return (dow + 7) % 7;
 }
 
-function dayOfWeekAsString(dow){
-  const a = ["日", "月", "火", "水", "木", "金", "土", "日"];
+function dayOfWeekAsString(dow) {
+  const a = ["土", "日", "月", "火", "水", "木", "金"];
   return a[dow];
 }
