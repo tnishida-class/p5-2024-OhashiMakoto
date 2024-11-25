@@ -3,8 +3,8 @@ let x, y;
 
 function setup(){
   createCanvas(windowWidth, windowHeight);
-  x = width / 2;
-  y = height / 2;
+  x = width/2 ;
+  y = height/2 ;
 }
 
 function draw(){
@@ -13,9 +13,11 @@ function draw(){
   if(keyIsDown(LEFT_ARROW)){ x -= 5; }
   if(keyIsDown(RIGHT_ARROW)){ x += 5; }
   if(keyIsDown(UP_ARROW)){ y -= 5; }
-  if(keyIsDown(DOWN_ARROW)){ y += 5; }
+  if(keyIsDown(DOWN_ARROW) && y < height-27){ y += 5; }
   if(keyIsDown("A".charCodeAt(0))){ x+= 10; }
   if(keyIsDown(" ".charCodeAt(0))){ x-= 10; }
+  if(keyIsDown("B".charCodeAt(0)) && (keyIsDown(RIGHT_ARROW))) { x += 20; }
+  if(keyIsDown("B".charCodeAt(0)) && (keyIsDown(LEFT_ARROW))) { x -= 20; }
 }
 
 // イベントハンドラを使用するパターン
